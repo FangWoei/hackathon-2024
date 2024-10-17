@@ -12,9 +12,17 @@ class PointsRedemptionPage extends StatefulWidget {
 }
 
 class _PointsRedemptionPageState extends State<PointsRedemptionPage> {
-  int userPoints = 1000; // Example initial point balance
+  int userPoints = 1500; // Example initial point balance
 
   List<RedemptionItem> items = [
+    RedemptionItem(
+      name: "Plane Ticket",
+      pointCost: 10000,
+    ),
+    RedemptionItem(
+      name: "Samsung A10",
+      pointCost: 5000,
+    ),
     RedemptionItem(
       name: "Paid Leave (2 Days)",
       pointCost: 5000,
@@ -24,28 +32,20 @@ class _PointsRedemptionPageState extends State<PointsRedemptionPage> {
       pointCost: 3000,
     ),
     RedemptionItem(
-      name: "Plane Ticket (2 Days)",
-      pointCost: 3000,
+      name: "Free Medical Check-up",
+      pointCost: 500,
     ),
     RedemptionItem(
       name: "Free Dental Check-up",
-      pointCost: 1500,
+      pointCost: 500,
     ),
     RedemptionItem(
-      name: "Free Medical Check-up",
-      pointCost: 1500,
-    ),
-    RedemptionItem(
-      name: "Samsung A10",
-      pointCost: 100,
+      name: "Phone Credit Top-up (RM50)",
+      pointCost: 500,
     ),
     RedemptionItem(
       name: "Basic Needs (Food, Toiletries)",
-      pointCost: 700,
-    ),
-    RedemptionItem(
-      name: "Phone Recharge",
-      pointCost: 500,
+      pointCost: 250,
     ),
   ];
 

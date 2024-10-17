@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:hackthon_2024/screen/event/event_page.dart';
 import 'package:hackthon_2024/screen/home_page.dart';
 import 'package:hackthon_2024/screen/loginRegister/login.dart';
 import 'package:hackthon_2024/screen/redeemPoints/redeem_points_page.dart';
@@ -13,7 +14,7 @@ class HomeScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return DefaultTabController(
-      length: 3,
+      length: 4,
       child: Scaffold(
         appBar: AppBar(
           toolbarHeight: 75,
@@ -43,8 +44,9 @@ class HomeScreen extends StatelessWidget {
         ),
         body: TabBarView(children: [
           const HomePage(),
+          TeamPage(),
           LeaderboardScreen(),
-          PointsRedemptionPage()
+          PointsRedemptionPage(),
         ]),
         bottomNavigationBar: Container(
           color: const Color.fromARGB(255, 192, 255, 185),
@@ -56,9 +58,9 @@ class HomeScreen extends StatelessWidget {
                   text: "Home",
                   icon: Icon(Icons.home),
                 ),
+                Tab(text: "Team", icon: Icon(Icons.people)),
                 Tab(text: "Leaderboard", icon: Icon(Icons.leaderboard)),
                 Tab(text: "Points", icon: Icon(Icons.redeem)),
-                // Tab(text: "BMI", icon: Icon(Icons.speed_sharp)),
               ]),
         ),
       ),
