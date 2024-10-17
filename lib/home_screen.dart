@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:hackthon_2024/screen/home_page.dart';
+import 'package:hackthon_2024/screen/leaderboard_page.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
@@ -9,9 +10,12 @@ class HomeScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return DefaultTabController(
-      length: 1,
+      length: 2,
       child: Scaffold(
         appBar: AppBar(
+          toolbarHeight: 75,
+          shape: const RoundedRectangleBorder(
+              borderRadius: BorderRadius.vertical(bottom: Radius.circular(16))),
           backgroundColor: const Color.fromARGB(255, 192, 255, 185),
           automaticallyImplyLeading: false,
           title: const Row(
@@ -34,19 +38,21 @@ class HomeScreen extends StatelessWidget {
           //   ),
           // ],
         ),
-        body: const TabBarView(
-            children: [HomePage()]),
+        body: TabBarView(children: [const HomePage(), LeaderboardScreen()]),
         bottomNavigationBar: Container(
           color: const Color.fromARGB(255, 192, 255, 185),
-          child: const TabBar(tabs: [
-            Tab(
-               text: "Home",
-              icon: Icon(Icons.home),
-            ),
-            // Tab(text: "Ended", icon: Icon(Icons.delete_forever_outlined)),
-            // Tab(text: "Post", icon: Icon(Icons.post_add_rounded)),
-            // Tab(text: "BMI", icon: Icon(Icons.speed_sharp)),
-          ]),
+          child: const TabBar(
+              splashBorderRadius:
+                  BorderRadius.vertical(top: Radius.circular(16)),
+              tabs: [
+                Tab(
+                  text: "Home",
+                  icon: Icon(Icons.home),
+                ),
+                Tab(text: "Leaderboard", icon: Icon(Icons.leaderboard)),
+                // Tab(text: "Post", icon: Icon(Icons.post_add_rounded)),
+                // Tab(text: "BMI", icon: Icon(Icons.speed_sharp)),
+              ]),
         ),
       ),
     );

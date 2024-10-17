@@ -23,8 +23,9 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp.router(
       routerConfig: GoRouter(initialLocation: "/", routes: routes),
+      debugShowCheckedModeBanner: false,
     );
   }
 }
 
-enum Screen { home}
+enum Screen { home }
