@@ -1,12 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:hackthon_2024/screen/home_page.dart';
-<<<<<<< HEAD
-import 'package:hackthon_2024/screen/leaderboard_page.dart';
-=======
 import 'package:hackthon_2024/screen/loginRegister/login.dart';
 import 'package:hackthon_2024/services/auth_services.dart';
->>>>>>> a533fc70ae4320b3ee8841759f44cfd06bf7a34e
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
