@@ -8,18 +8,30 @@ class ZoneEntry {
   final double completion;
   final int target;
   final int daysLeft;
+  final String imageURL;
 
   ZoneEntry(
       {required this.name,
       required this.completion,
       required this.target,
-      required this.daysLeft});
+      required this.daysLeft,
+      required this.imageURL});
 }
 
 class TeamPage extends StatelessWidget {
   final List<ZoneEntry> entries = [
-    ZoneEntry(name: "Zone 1", completion: 0.20, target: 40, daysLeft: 10),
-    ZoneEntry(name: "Zone 2", completion: 0.60, target: 30, daysLeft: 5),
+    ZoneEntry(
+        name: "Zone 1",
+        completion: 0.60,
+        target: 40,
+        daysLeft: 10,
+        imageURL: 'assets/images/Map1.png'),
+    ZoneEntry(
+        name: "Zone 2",
+        completion: 0.85,
+        target: 30,
+        daysLeft: 5,
+        imageURL: 'assets/images/Map2.png'),
   ];
 
   @override
@@ -149,7 +161,7 @@ class TeamPage extends StatelessWidget {
                 ),
                 const SizedBox(height: 16),
                 SizedBox(
-                    height: 300,
+                    height: 1000,
                     child: ListView.builder(
                       itemCount: entries.length,
                       itemBuilder: (context, index) {
@@ -203,7 +215,7 @@ class _HarvestingMetric extends StatelessWidget {
             value: 0.6,
             backgroundColor: Colors.grey[500],
             valueColor: AlwaysStoppedAnimation<Color>(
-              Colors.blue[900] ?? Colors.blue,
+              Colors.deepOrange[600] ?? Colors.blue,
             ),
             minHeight: 8,
           ),
@@ -267,13 +279,15 @@ class _ZoneItems extends StatelessWidget {
                   ),
                 ),
                 const SizedBox(height: 8),
+                Image(image: AssetImage(entry.imageURL)),
+                const SizedBox(height: 8),
                 ClipRRect(
                   borderRadius: BorderRadius.circular(4),
                   child: LinearProgressIndicator(
                     value: entry.completion,
                     backgroundColor: Colors.grey[500],
                     valueColor: AlwaysStoppedAnimation<Color>(
-                      Colors.blue[900] ?? Colors.blue,
+                      Colors.deepOrange[600] ?? Colors.blue,
                     ),
                     minHeight: 8,
                   ),

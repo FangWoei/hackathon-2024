@@ -8,14 +8,6 @@ class HomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      floatingActionButton: FloatingActionButton(
-          onPressed: () {
-            Navigator.push(
-              context,
-              MaterialPageRoute(builder: (context) => FeedbackForm()),
-            );
-          },
-          child: const Icon(Icons.mail)),
       body: SafeArea(
         child: SingleChildScrollView(
           child: Padding(
@@ -58,7 +50,7 @@ class HomePage extends StatelessWidget {
                                     color: Colors.grey[600],
                                   ),
                                   const Text(
-                                    "3",
+                                    "1",
                                     style: TextStyle(
                                       fontSize: 20,
                                       fontWeight: FontWeight.w600,
@@ -88,22 +80,22 @@ class HomePage extends StatelessWidget {
                 const SizedBox(height: 16),
                 const _ActivityCard(
                   title: 'Harvesting',
-                  completedValue: 3.8,
-                  targetValue: 5,
+                  completedValue: 4,
+                  targetValue: 4,
                   unit: 'tonnes',
                   date: '17-10-2024',
-                  extra: "0",
-                  money: "RM190",
+                  extra: "2",
+                  money: "RM320 (100 points)",
                 ),
                 const SizedBox(height: 16),
                 const _ActivityCard(
                   title: 'Harvesting',
-                  completedValue: 4,
-                  targetValue: 4,
+                  completedValue: 3.8,
+                  targetValue: 5,
                   unit: 'tonnes',
                   date: '15-10-2024',
-                  extra: "2",
-                  money: "RM320 (100 points)",
+                  extra: "0",
+                  money: "RM190",
                 ),
               ],
             ),
@@ -195,7 +187,7 @@ class _HarvestingMetric extends StatelessWidget {
             value: 0.64,
             backgroundColor: Colors.grey[500],
             valueColor: AlwaysStoppedAnimation<Color>(
-              Colors.blue[900] ?? Colors.blue,
+              Colors.deepOrange[600] ?? Colors.blue,
             ),
             minHeight: 8,
           ),
@@ -266,7 +258,7 @@ class _ActivityCard extends StatelessWidget {
                 PieChartData(
                   sections: [
                     PieChartSectionData(
-                      color: Colors.green,
+                      color: Colors.deepOrange[600],
                       value: completedValue,
                       title: '',
                       radius: 30,
@@ -299,7 +291,7 @@ class _ActivityCard extends StatelessWidget {
                   ),
                   const SizedBox(height: 8),
                   Text(
-                    'Date: $date',
+                    'Date :$date',
                     style: TextStyle(
                       fontSize: 14,
                       color: Colors.grey[600],
@@ -327,7 +319,7 @@ class _ActivityCard extends StatelessWidget {
                     ),
                   ),
                   Text(
-                    'Extra: $extra $unit',
+                    'Extra :$extra $unit',
                     style: TextStyle(
                       fontSize: 14,
                       color: Colors.grey[600],
@@ -342,86 +334,6 @@ class _ActivityCard extends StatelessWidget {
                   ),
                 ],
               ),
-            ),
-          ],
-        ),
-      ),
-    );
-  }
-}
-
-class FeedbackForm extends StatefulWidget {
-  @override
-  _FeedbackFormState createState() => _FeedbackFormState();
-}
-
-class _FeedbackFormState extends State<FeedbackForm> {
-  String? selectedReason; // To store the selected feedback reason
-  final List<String> feedbackReasons = [
-    "Report bug",
-    "Report health issue",
-    "Report supervisor issue",
-    "Report accommodation issue",
-    "General feedback",
-  ];
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text('Feedback Form'),
-      ),
-      body: Padding(
-        padding: const EdgeInsets.all(16.0),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            const Text(
-              'Select Feedback Reason:',
-              style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
-            ),
-            const SizedBox(height: 10),
-            Column(
-              children: feedbackReasons.map((reason) {
-                return ElevatedButton(
-                  onPressed: () {
-                    setState(() {
-                      selectedReason = reason;
-                    });
-                  },
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: selectedReason == reason
-                        ? Colors.blue
-                        : Colors.grey[300], // Change color when selected
-                  ),
-                  child: Text(reason),
-                );
-              }).toList(),
-            ),
-            const SizedBox(height: 20),
-            const TextField(
-              decoration: InputDecoration(
-                labelText: 'Your Feedback',
-                border: OutlineInputBorder(),
-              ),
-              maxLines: 5,
-            ),
-            const SizedBox(height: 20),
-            ElevatedButton(
-              onPressed: () {
-                if (selectedReason != null) {
-                  // Handle feedback submission
-                  Navigator.pop(context);
-                } else {
-                  // Show a warning if no reason is selected
-                  ScaffoldMessenger.of(context).showSnackBar(
-                    const SnackBar(
-                      content: Text('Please select a feedback reason.'),
-                    ),
-                  );
-                }
-              },
-              child: const Text('Submit'),
             ),
           ],
         ),

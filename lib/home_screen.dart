@@ -20,27 +20,38 @@ class HomeScreen extends StatelessWidget {
           toolbarHeight: 75,
           shape: const RoundedRectangleBorder(
               borderRadius: BorderRadius.vertical(bottom: Radius.circular(16))),
-          backgroundColor: const Color.fromARGB(255, 192, 255, 185),
+          backgroundColor: Colors.grey[900],
           automaticallyImplyLeading: false,
-          title: const Row(
+          title: Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Text(
                 "Hackathon",
-                style: TextStyle(fontSize: 30.0, fontWeight: FontWeight.bold),
+                style: TextStyle(
+                    fontSize: 30.0,
+                    fontWeight: FontWeight.bold,
+                    color: Colors.grey[400]),
               )
             ],
           ),
           centerTitle: true, // Ensure the title itself is centered
           actions: [
             IconButton(
-              icon: const Icon(Icons.logout),
+              icon: Icon(
+                Icons.logout,
+                color: Colors.grey[400],
+              ),
               onPressed: () async {
                 await AuthService().signOut();
                 context.pushNamed(Login.routeName);
               },
             ),
-            IconButton(onPressed: () {}, icon: const Icon(Icons.translate))
+            IconButton(
+                onPressed: () {},
+                icon: Icon(
+                  Icons.translate,
+                  color: Colors.grey[400],
+                ))
           ],
         ),
         body: TabBarView(children: [
@@ -50,11 +61,13 @@ class HomeScreen extends StatelessWidget {
           PointsRedemptionPage(),
         ]),
         bottomNavigationBar: Container(
-          color: const Color.fromARGB(255, 192, 255, 185),
-          child: const TabBar(
+          color: Colors.grey[900],
+          child: TabBar(
               splashBorderRadius:
                   BorderRadius.vertical(top: Radius.circular(16)),
-              tabs: [
+              labelColor: Colors.grey[400],
+              indicatorColor: Colors.grey[400],
+              tabs: const [
                 Tab(
                   text: "Home",
                   icon: Icon(Icons.home),

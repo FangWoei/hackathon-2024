@@ -2,24 +2,24 @@ import 'package:flutter/material.dart';
 
 class LeaderboardEntry {
   final String name;
-  final int score;
+  final int totalWeight;
 
-  LeaderboardEntry({required this.name, required this.score});
+  LeaderboardEntry({required this.name, required this.totalWeight});
 }
 
 class LeaderboardScreen extends StatelessWidget {
   final List<LeaderboardEntry> entries = [
     LeaderboardEntry(
       name: "John Doe",
-      score: 1000,
+      totalWeight: 1000,
     ),
     LeaderboardEntry(
       name: "Jane Smith",
-      score: 850,
+      totalWeight: 850,
     ),
     LeaderboardEntry(
       name: "Bob Johnson",
-      score: 720,
+      totalWeight: 720,
     ),
     // Add more entries as needed
   ];
@@ -116,7 +116,7 @@ class LeaderboardTile extends StatelessWidget {
                   ),
                   SizedBox(height: 4),
                   Text(
-                    'Score: ${entry.score}',
+                    'Total Weight: ${entry.totalWeight}',
                     style: TextStyle(
                       fontSize: 14,
                       color: Color(0xFF718096),
