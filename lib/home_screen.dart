@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:hackthon_2024/screen/home_page.dart';
+import 'package:hackthon_2024/screen/leaderboard_page.dart';
 import 'package:hackthon_2024/screen/loginRegister/login.dart';
 import 'package:hackthon_2024/services/auth_services.dart';
 
