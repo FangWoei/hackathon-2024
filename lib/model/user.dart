@@ -8,7 +8,7 @@ class User {
     required this.userId,
     required this.name,
     required this.email,
-    required this.role
+    this.role = 'user'
   });
 
   Map<String, dynamic> toMap() {
