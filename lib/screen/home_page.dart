@@ -2,12 +2,41 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:fl_chart/fl_chart.dart';
 
-class HomePage extends StatelessWidget {
+class HomePage extends StatefulWidget {
   const HomePage({super.key});
+
+  @override
+  _HomePageState createState() => _HomePageState();
+}
+
+class _HomePageState extends State<HomePage> {
+  int personCount = 0;
+  double extraAmount = 0.0;
+
+  void updatePersonCount(int count) {
+    setState(() {
+      personCount = count;
+      extraAmount = count * 1.0; // RM 1 per person
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      floatingActionButton: Row(
+        mainAxisAlignment: MainAxisAlignment.end,
+        children: [
+          FloatingActionButton(
+            onPressed: () => _showFeedbackDialog(context),
+            child: const Icon(Icons.mail),
+          ),
+          const SizedBox(width: 16),
+          FloatingActionButton(
+            onPressed: () => _showPersonDialog(context),
+            child: const Icon(Icons.person),
+          ),
+        ],
+      ),
       body: SafeArea(
         child: SingleChildScrollView(
           child: Padding(
@@ -16,22 +45,34 @@ class HomePage extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Card(
+                  child: Padding(
+                    padding: const EdgeInsets.all(16.0),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                            "You invite $personCount person${personCount != 1 ? 's' : ''}"),
+                        Text("You have extra RM$extraAmount"),
+                      ],
+                    ),
+                  ),
+                ),
+                Card(
                   elevation: 2,
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(16),
                   ),
                   child: Padding(
-                    padding: EdgeInsets.all(16.0),
+                    padding: const EdgeInsets.all(16.0),
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       mainAxisSize: MainAxisSize.min,
                       children: [
-                        Container(
+                        SizedBox(
                           width: double.infinity,
                           height: 50,
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            mainAxisSize: MainAxisSize.min,
                             children: [
                               const Text(
                                 "Today's Performance",
@@ -41,8 +82,6 @@ class HomePage extends StatelessWidget {
                                 ),
                               ),
                               Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
                                 mainAxisSize: MainAxisSize.min,
                                 children: [
                                   Icon(
@@ -61,8 +100,8 @@ class HomePage extends StatelessWidget {
                             ],
                           ),
                         ),
-                        SizedBox(height: 16),
-                        _HarvestingMetric(),
+                        const SizedBox(height: 16),
+                        const _HarvestingMetric(),
                       ],
                     ),
                   ),
@@ -104,7 +143,128 @@ class HomePage extends StatelessWidget {
       ),
     );
   }
+
+  void _showFeedbackDialog(BuildContext context) {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) => FeedbackDialog(),
+    );
+  }
+
+  void _showPersonDialog(BuildContext context) {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) => PersonDialog(
+        onSubmit: (int count) {
+          updatePersonCount(count);
+        },
+      ),
+    );
+  }
 }
+
+class FeedbackDialog extends StatefulWidget {
+  const FeedbackDialog({super.key});
+
+  @override
+  State<FeedbackDialog> createState() => _FeedbackDialogState();
+}
+
+class _FeedbackDialogState extends State<FeedbackDialog> {
+  final _feedbackController = TextEditingController();
+
+  @override
+  Widget build(BuildContext context) {
+    return AlertDialog(
+      title: const Text('Submit Feedback'),
+      content: TextField(
+        controller: _feedbackController,
+        decoration: const InputDecoration(
+          hintText: 'Enter your feedback',
+        ),
+        maxLines: 3,
+      ),
+      actions: [
+        TextButton(
+          onPressed: () => Navigator.pop(context),
+          child: const Text('Cancel'),
+        ),
+        ElevatedButton(
+          onPressed: () {
+            final feedback = _feedbackController.text;
+            if (feedback.isNotEmpty) {
+              // Handle the feedback submission
+              print("Feedback submitted: $feedback");
+              Navigator.pop(context);
+            }
+          },
+          child: const Text('Submit'),
+        ),
+      ],
+    );
+  }
+
+  @override
+  void dispose() {
+    _feedbackController.dispose();
+    super.dispose();
+  }
+}
+
+class PersonDialog extends StatefulWidget {
+  final Function(int) onSubmit;
+
+  const PersonDialog({
+    super.key,
+    required this.onSubmit,
+  });
+
+  @override
+  State<PersonDialog> createState() => _PersonDialogState();
+}
+
+class _PersonDialogState extends State<PersonDialog> {
+  final _personController = TextEditingController();
+
+  @override
+  Widget build(BuildContext context) {
+    return AlertDialog(
+      title: const Text('One person RM 1'),
+      content: TextField(
+        controller: _personController,
+        decoration: const InputDecoration(
+          hintText: 'How many people you invite',
+        ),
+        keyboardType: TextInputType.number,
+        maxLines: 1,
+      ),
+      actions: [
+        TextButton(
+          onPressed: () => Navigator.pop(context),
+          child: const Text('Cancel'),
+        ),
+        ElevatedButton(
+          onPressed: () {
+            final personCountText = _personController.text;
+            if (personCountText.isNotEmpty) {
+              final count = int.tryParse(personCountText) ?? 0;
+              widget.onSubmit(count);
+              Navigator.pop(context);
+            }
+          },
+          child: const Text('Submit'),
+        ),
+      ],
+    );
+  }
+
+  @override
+  void dispose() {
+    _personController.dispose();
+    super.dispose();
+  }
+}
+
 
 class _WeeklyEarningsCard extends StatelessWidget {
   const _WeeklyEarningsCard();
