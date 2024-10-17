@@ -40,6 +40,7 @@ class HomeScreen extends StatelessWidget {
                 context.pushNamed(Login.routeName);
               },
             ),
+            IconButton(onPressed: () {}, icon: const Icon(Icons.translate))
           ],
         ),
         body: TabBarView(children: [
