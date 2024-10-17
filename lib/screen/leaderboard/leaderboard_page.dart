@@ -3,26 +3,24 @@ import 'package:flutter/material.dart';
 class LeaderboardEntry {
   final String name;
   final int score;
-  final String avatarUrl;
 
-  LeaderboardEntry(
-      {required this.name, required this.score, required this.avatarUrl});
+  LeaderboardEntry({required this.name, required this.score});
 }
 
 class LeaderboardScreen extends StatelessWidget {
   final List<LeaderboardEntry> entries = [
     LeaderboardEntry(
-        name: "John Doe",
-        score: 1000,
-        avatarUrl: "https://example.com/avatar1.jpg"),
+      name: "John Doe",
+      score: 1000,
+    ),
     LeaderboardEntry(
-        name: "Jane Smith",
-        score: 850,
-        avatarUrl: "https://example.com/avatar2.jpg"),
+      name: "Jane Smith",
+      score: 850,
+    ),
     LeaderboardEntry(
-        name: "Bob Johnson",
-        score: 720,
-        avatarUrl: "https://example.com/avatar3.jpg"),
+      name: "Bob Johnson",
+      score: 720,
+    ),
     // Add more entries as needed
   ];
 
@@ -102,11 +100,6 @@ class LeaderboardTile extends StatelessWidget {
                 fontWeight: FontWeight.bold,
                 color: Color(0xFF2C5282),
               ),
-            ),
-            SizedBox(width: 16),
-            CircleAvatar(
-              backgroundImage: NetworkImage(entry.avatarUrl),
-              radius: 24,
             ),
             SizedBox(width: 16),
             Expanded(
