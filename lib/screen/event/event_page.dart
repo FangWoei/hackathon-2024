@@ -25,18 +25,29 @@ class TeamPage extends StatelessWidget {
         completion: 0.60,
         target: 40,
         daysLeft: 10,
-        imageURL: 'assets/images/Map1.png'),
+        imageURL: 'assets/images/zon1.png'),
     ZoneEntry(
         name: "Zone 2",
         completion: 0.85,
         target: 30,
         daysLeft: 5,
-        imageURL: 'assets/images/Map2.png'),
+        imageURL: 'assets/images/zon2.png'),
+    ZoneEntry(
+        name: "Zone 2",
+        completion: 0.85,
+        target: 30,
+        daysLeft: 5,
+        imageURL: 'assets/images/zon1.png'),
+    ZoneEntry(
+        name: "Zone 2",
+        completion: 0.85,
+        target: 30,
+        daysLeft: 5,
+        imageURL: 'assets/images/zon2.png'),
   ];
 
   @override
   Widget build(BuildContext context) {
-    entries.sort((a, b) => a.daysLeft.compareTo(b.daysLeft));
     return Scaffold(
       body: SafeArea(
         child: SingleChildScrollView(
@@ -160,22 +171,82 @@ class TeamPage extends StatelessWidget {
                   ),
                 ),
                 const SizedBox(height: 16),
-                SizedBox(
-                    height: 1000,
-                    child: ListView.builder(
-                      itemCount: entries.length,
-                      itemBuilder: (context, index) {
-                        return Padding(
-                          padding: const EdgeInsets.only(bottom: 16),
-                          child: _ZoneItems(entry: entries[index]),
-                        );
-                      },
-                    ))
+                Card(
+                    elevation: 2,
+                    shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(16)),
+                    child: Padding(
+                        padding: const EdgeInsets.all(16.0),
+                        child: Container(
+                          height: 1000,
+                          child: Stack(children: [
+                            Container(
+                              constraints:
+                                  const BoxConstraints.expand(height: 850),
+                              decoration: const BoxDecoration(
+                                  image: DecorationImage(
+                                      image: AssetImage('assets/images/bg.png'),
+                                      fit: BoxFit.cover)),
+                            ),
+                            // GridView.count(
+                            //   crossAxisCount: 2,
+                            //   children: [
+                            //     ElevatedButton(
+                            //       onPressed: () {
+                            //         print('Button pressed');
+                            //       },
+                            //       style: ElevatedButton.styleFrom(
+                            //           backgroundColor: Colors.white.withOpacity(
+                            //               0.8), // Semi-transparent background
+                            //           foregroundColor: Colors.black,
+                            //           fixedSize: Size(120, 240),
+                            //           shape: RoundedRectangleBorder(
+                            //               borderRadius: BorderRadius.zero)),
+                            //       child: Text('Button'),
+                            //     ),
+                            //   ],
+                            // )
+                            GridView.builder(
+                                itemCount: 4,
+                                gridDelegate:
+                                    const SliverGridDelegateWithMaxCrossAxisExtent(
+                                  maxCrossAxisExtent: 400,
+                                  mainAxisExtent: 425,
+                                  crossAxisSpacing: 0,
+                                  mainAxisSpacing: 0,
+                                ),
+                                itemBuilder: (context, index) {
+                                  double height = (index > 1) ? 150 : 750;
+                                  return Container(
+                                    height: height,
+                                    child: ElevatedButton(
+                                      onPressed: () {
+                                        _showPersonDialog(context, index + 1);
+                                      },
+                                      style: ElevatedButton.styleFrom(
+                                          backgroundColor: Colors.white.withOpacity(
+                                              0.2), // Semi-transparent background
+                                          foregroundColor: Colors.white,
+                                          shape: RoundedRectangleBorder(
+                                              borderRadius: BorderRadius.zero)),
+                                      child: Text('Zone ${index + 1}'),
+                                    ),
+                                  );
+                                })
+                          ]),
+                        )))
               ],
             ),
           ),
         ),
       ),
+    );
+  }
+
+  void _showPersonDialog(BuildContext context, int zone) {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) => PersonDialog(zone: zone),
     );
   }
 }
@@ -252,69 +323,102 @@ class _HarvestingMetric extends StatelessWidget {
   }
 }
 
-class _ZoneItems extends StatelessWidget {
-  final ZoneEntry entry;
+class PersonDialog extends StatefulWidget {
+  final int zone;
 
-  const _ZoneItems({super.key, required this.entry});
+  const PersonDialog({super.key, required this.zone});
+
+  @override
+  State<PersonDialog> createState() => _PersonDialogState();
+}
+
+class _PersonDialogState extends State<PersonDialog> {
+  final _personController = TextEditingController();
+
+  @override
+  Widget build(BuildContext context) {
+    return AlertDialog(
+      title: const Text('Current Locations'),
+      content: Container(
+        height: 500,
+        child: Stack(
+          children: [
+            Container(
+              constraints: const BoxConstraints.expand(height: 400),
+              decoration: BoxDecoration(
+                  image: DecorationImage(
+                      image: AssetImage('assets/images/zon${widget.zone}.png'),
+                      fit: BoxFit.cover)),
+            ),
+            Positioned(
+              top: 100, // Y-axis position (vertical)
+              left: 150, // X-axis position (horizontal)
+              child: MarkerWidget(
+                initials: 'CV', // Example initials
+                backgroundColor: Colors.blue,
+              ),
+            ),
+            Positioned(
+              top: 200,
+              left: 120,
+              child: MarkerWidget(
+                initials: 'AB',
+                backgroundColor: Colors.red,
+              ),
+            ),
+            Positioned(
+              top: 300,
+              left: 100,
+              child: MarkerWidget(
+                initials: 'LM',
+                backgroundColor: Colors.green,
+              ),
+            )
+          ],
+        ),
+      ),
+      actions: [
+        TextButton(
+          onPressed: () => Navigator.pop(context),
+          child: const Text('Close'),
+        ),
+      ],
+    );
+  }
+
+  @override
+  void dispose() {
+    _personController.dispose();
+    super.dispose();
+  }
+}
+
+class MarkerWidget extends StatelessWidget {
+  final String initials;
+  final Color backgroundColor;
+
+  const MarkerWidget({
+    Key? key,
+    required this.initials,
+    this.backgroundColor = Colors.blue,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Container(
-        width: double.infinity,
-        child: Card(
-          elevation: 2,
-          shape:
-              RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
-          child: Padding(
-            padding: const EdgeInsets.all(16.0),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                Text(
-                  entry.name,
-                  style: const TextStyle(
-                    fontSize: 20,
-                    fontWeight: FontWeight.w600,
-                  ),
-                ),
-                const SizedBox(height: 8),
-                Image(image: AssetImage(entry.imageURL)),
-                const SizedBox(height: 8),
-                ClipRRect(
-                  borderRadius: BorderRadius.circular(4),
-                  child: LinearProgressIndicator(
-                    value: entry.completion,
-                    backgroundColor: Colors.grey[500],
-                    valueColor: AlwaysStoppedAnimation<Color>(
-                      Colors.deepOrange[600] ?? Colors.blue,
-                    ),
-                    minHeight: 8,
-                  ),
-                ),
-                const SizedBox(height: 8),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Text(
-                      'Time left: ${entry.daysLeft} days',
-                      style: TextStyle(
-                        fontSize: 14,
-                        color: Colors.grey[600],
-                      ),
-                    ),
-                    Text(
-                      'Done: ${entry.completion * 100}%',
-                      style: TextStyle(
-                        fontSize: 14,
-                        color: Colors.grey[600],
-                      ),
-                    ),
-                  ],
-                ),
-              ],
-            ),
-          ),
-        ));
+      padding: EdgeInsets.all(12),
+      decoration: BoxDecoration(
+        color: backgroundColor.withOpacity(0.9), // Marker background color
+        shape: BoxShape.circle, // Circular marker
+      ),
+      child: Text(
+        initials,
+        style: TextStyle(
+          color: Colors.white,
+          fontWeight: FontWeight.bold,
+          fontSize: 16,
+        ),
+      ),
+    );
   }
 }
