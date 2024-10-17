@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:hackthon_2024/home_screen.dart';
+import 'package:hackthon_2024/admin_home_screen.dart';
+import 'package:hackthon_2024/repo/user_repo.dart';
 import 'package:hackthon_2024/screen/loginRegister/register.dart';
 import 'package:hackthon_2024/services/auth_services.dart';
 
@@ -17,6 +19,7 @@ class _LoginState extends State<Login> {
   final TextEditingController emailController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
   final AuthService _authService = AuthService();
+  final UserRepo _userRepo = UserRepo();
 
   String? emailError;
   String? passwordError;
@@ -36,8 +39,28 @@ class _LoginState extends State<Login> {
 
     if (email.isNotEmpty && password.isNotEmpty) {
       try {
+        // First, authenticate the user
         await _authService.signInWithEmailAndPassword(email, password);
-        context.pushNamed(HomeScreen.routeName);
+        
+        // Then fetch the user data to check their role
+        final user = await _userRepo.getUser();
+        
+        if (user != null) {
+          // Route based on user role
+          if (user.role == "admin") {
+            if (mounted) {
+              context.pushNamed(AdminHomeScreen.routeName);
+            }
+          } else {
+            if (mounted) {
+              context.pushNamed(HomeScreen.routeName);
+            }
+          }
+        } else {
+          setState(() {
+            loginError = 'User data not found.';
+          });
+        }
       } catch (e) {
         setState(() {
           loginError = 'Login failed. Please check your email or password.';
@@ -65,7 +88,6 @@ class _LoginState extends State<Login> {
     return Scaffold(
       body: Stack(
         children: [
-        
           Center(
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
@@ -73,9 +95,10 @@ class _LoginState extends State<Login> {
                 const Text(
                   "Login",
                   style: TextStyle(
-                      fontSize: 30.0,
-                      fontWeight: FontWeight.bold,
-                      color: Colors.white),
+                    fontSize: 30.0,
+                    fontWeight: FontWeight.bold,
+                    color: Colors.white,
+                  ),
                 ),
                 Container(
                   margin: const EdgeInsets.fromLTRB(0.0, 100.0, 0.0, 30.0),
