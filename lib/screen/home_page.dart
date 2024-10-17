@@ -26,7 +26,7 @@ class HomePage extends StatelessWidget {
                       mainAxisSize: MainAxisSize.min,
                       children: [
                         Text(
-                          'Daily Performance',
+                          "Today's Performance",
                           style: TextStyle(
                             fontSize: 20,
                             fontWeight: FontWeight.w600,
@@ -66,7 +66,7 @@ class HomePage extends StatelessWidget {
                   unit: 'tonnes',
                   date: '15-10-2024',
                   extra: "2",
-                  money: "RM300 (Extra 100 points)",
+                  money: "RM320 (100 points)",
                 ),
               ],
             ),
@@ -76,6 +76,7 @@ class HomePage extends StatelessWidget {
     );
   }
 }
+
 class _WeeklyEarningsCard extends StatelessWidget {
   const _WeeklyEarningsCard();
 
@@ -92,7 +93,7 @@ class _WeeklyEarningsCard extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             const Text(
-              'Daily Earnings',
+              "Today's Earnings",
               style: TextStyle(
                 fontSize: 18,
                 fontWeight: FontWeight.w600,
@@ -100,7 +101,7 @@ class _WeeklyEarningsCard extends StatelessWidget {
             ),
             const SizedBox(height: 12),
             const Text(
-              'RM 160 / RM250',
+              'RM160 / RM250',
               style: TextStyle(
                 fontSize: 24,
                 fontWeight: FontWeight.bold,
@@ -109,7 +110,7 @@ class _WeeklyEarningsCard extends StatelessWidget {
             const SizedBox(height: 4),
             const SizedBox(height: 12),
             Text(
-              'Extra 1 tonnes RM 50 and 50 points for reedem bonus',
+              '*Each extra tonne corresponds to RM60 and 50 points',
               style: TextStyle(
                 fontSize: 14,
                 color: Colors.grey[600],
@@ -154,7 +155,7 @@ class _HarvestingMetric extends StatelessWidget {
         ClipRRect(
           borderRadius: BorderRadius.circular(4),
           child: LinearProgressIndicator(
-            value: 0.65,
+            value: 0.64,
             backgroundColor: Colors.grey[500],
             valueColor: AlwaysStoppedAnimation<Color>(
               Colors.blue[900] ?? Colors.blue,
@@ -174,7 +175,7 @@ class _HarvestingMetric extends StatelessWidget {
               ),
             ),
             Text(
-              'Done: 65%',
+              'Done: 64%',
               style: TextStyle(
                 fontSize: 14,
                 color: Colors.grey[600],
@@ -204,7 +205,6 @@ class _ActivityCard extends StatelessWidget {
     required this.date,
     required this.extra,
     required this.money,
-
   });
 
   @override
