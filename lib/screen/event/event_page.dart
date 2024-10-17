@@ -181,21 +181,21 @@ class _HarvestingMetric extends StatelessWidget {
             Text(
               'Target: 15 tonnes',
               style: TextStyle(
-                fontSize: 14,
+                fontSize: 12,
                 color: Colors.grey[600],
               ),
             ),
             Text(
-              'Time left: 1 week',
+              'Time left:1 week',
               style: TextStyle(
-                fontSize: 14,
+                fontSize: 12,
                 color: Colors.grey[600],
               ),
             ),
             Text(
               'Done: 60%',
               style: TextStyle(
-                fontSize: 14,
+                fontSize: 12,
                 color: Colors.grey[600],
               ),
             ),
